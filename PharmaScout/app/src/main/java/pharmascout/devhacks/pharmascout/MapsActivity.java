@@ -28,6 +28,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         Bundle coord = getIntent().getExtras();
+
+        latitude = 0.0;
+        longitude = 0.0;
+
         if(coord != null) {
             latitude = coord.getDouble("latitude");
             longitude = coord.getDouble("longitude");
