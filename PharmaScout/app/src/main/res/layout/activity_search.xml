@@ -21,4 +21,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:contentDescription="Open Map" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="60dp"
+        android:id="@+id/textView"
+        android:onClick="checkNet"
+        android:clickable="true"/>
+
 </RelativeLayout>
