@@ -1,9 +1,15 @@
 package pharmascout.devhacks.pharmascout;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -23,18 +30,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import pharmascout.devhacks.pharmascout.API.RestDBApi;
+import pharmascout.devhacks.pharmascout.model.FarmacieModel;
+import pharmascout.devhacks.pharmascout.singletons.DataHandler;
+
 public class SearchActivity extends AppCompatActivity {
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        //comment pus de Nelu
-    }
 
-    class Point2f{
-        public double x;
-        public double y;
+        progressDialog = new ProgressDialog(this);
+        //comment pus de Nelu
     }
 
     public String convertInputStreamToString(InputStream stream, int length) throws IOException, UnsupportedEncodingException {
@@ -125,7 +135,56 @@ public class SearchActivity extends AppCompatActivity {
         EditText searchText = (EditText) findViewById(R.id.searchText);
 
         String text = searchText.getText().toString();
-        Toast msg = Toast.makeText(getBaseContext(),text,Toast.LENGTH_LONG);
+        Toast msg = Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG);
         msg.show();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+
+        ConnectivityManager cm =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected) {
+            search(text);
+        } else {
+            Toast.makeText(this, "Nu ai net boss!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setLoading(boolean loading) {
+        if (progressDialog != null) {
+            if (loading) {
+                progressDialog.setMessage("Se executa cautarea");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+            } else {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    private void search(String query) {
+        setLoading(true);
+        (new RestDBApi()).getFarmacii(query, new RestDBApi.CallBack(){
+            @Override
+            public void onSuccess(List<FarmacieModel> listaFarmacii) {
+                setLoading(false);
+                Toast.makeText(SearchActivity.this, "Boss! Chiar am luat ceva", Toast.LENGTH_SHORT).show();
+                listaFarmacii = DataHandler.getInstance().filterOutFarmaciiInchise(listaFarmacii);
+                Log.i(SearchActivity.class.getName(), String.valueOf(listaFarmacii.size()));
+            }
+
+            @Override
+            public void onError(String message) {
+                setLoading(false);
+                Toast.makeText(SearchActivity.this, "Mare eroare ce ai luat", Toast.LENGTH_SHORT).show();
+                Log.e(SearchActivity.class.getName(), message);
+            }
+        });
     }
 }
+
