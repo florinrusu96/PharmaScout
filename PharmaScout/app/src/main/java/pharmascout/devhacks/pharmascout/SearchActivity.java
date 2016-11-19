@@ -9,6 +9,13 @@ import java.util.Random;
 
 public class SearchActivity extends AppCompatActivity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        //comment pus de Nelu
+    }
+
     public void mapStartButton(View obj){
         Bundle coords = new Bundle();
         Random rand = new Random();
@@ -18,12 +25,5 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = new Intent(SearchActivity.this, MapsActivity.class );
         intent.putExtras(coords);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-	    //comment pus de Nelu
     }
 }

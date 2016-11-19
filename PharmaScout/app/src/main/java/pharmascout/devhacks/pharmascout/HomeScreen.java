@@ -57,13 +57,13 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void searchAction(View view) {
-
+        Intent i=new Intent(HomeScreen.this, SearchActivity.class);
+        startActivity(i);
     }
 
     public void optionsAction(View view) {
         Intent i=new Intent(HomeScreen.this, OptionsScreen.class);
         startActivity(i);
-
     }
 
     public void exitAction(View view) {

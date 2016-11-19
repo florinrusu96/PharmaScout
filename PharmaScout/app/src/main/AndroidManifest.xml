@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pharmascout.devhacks.pharmascout">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,13 +17,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity">
+
+        <activity android:name=".OptionsScreen">
+        </activity>
+
+        <activity android:name=".SearchActivity">
+        </activity>
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="mapsLabel">
 
         </activity>
-        <activity android:name=".OptionsScreen"
-            android:label="@string/option_eng">
 
-        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCslSXOhc3emxLr_vfM0pRAAvBHye76Mto" />
+
     </application>
 
 </manifest>
