@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // comment added for test
+        // comment added by damian
     }
 
     public void clickFunc(View event){
