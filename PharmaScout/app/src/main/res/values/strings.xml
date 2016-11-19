@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">PharmaScout</string>
+    <string name="search_eng">Let\'s Search</string>
+    <string name="option_eng">Options</string>
+    <string name="exit_eng">Exit</string>
+    <string name="range_eng">Range</string>
     <string name="title_activity_maps">Map</string>
 </resources>
