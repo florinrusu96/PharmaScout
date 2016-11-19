@@ -2,7 +2,9 @@ package pharmascout.devhacks.pharmascout.API;
 
 import android.util.Log;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pharmascout.devhacks.pharmascout.model.FarmacieModel;
 import retrofit2.Call;
@@ -34,7 +36,11 @@ public class RestDBApi {
     }
 
     public void getFarmacii(String query, final CallBack callBack) {
-        farmaciiService.getFarmacii("583096995472037d54148828").enqueue(new Callback<List<FarmacieModel>>() {
+        Map<String, String> queryMap = new HashMap<>();
+        queryMap.put("apikey", "583096995472037d54148828");
+        queryMap.put("filter", query);
+
+        farmaciiService.getFarmacii(queryMap).enqueue(new Callback<List<FarmacieModel>>() {
             @Override
             public void onResponse(Call<List<FarmacieModel>> call, Response<List<FarmacieModel>> response) {
 
