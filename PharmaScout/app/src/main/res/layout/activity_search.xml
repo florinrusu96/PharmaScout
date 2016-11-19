@@ -10,6 +10,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pharmascout.devhacks.pharmascout.SearchActivity">
 
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+
+    <Button
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchButton"
+        android:text="Search"
+        android:clickable="true"
+        android:layout_weight="0.42"
+        android:onClick="searchButton"
+        android:layout_below="@+id/searchText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:onClick="checkNet"
+        android:clickable="true"
+        android:layout_alignTop="@+id/button2"
+        android:layout_alignRight="@+id/searchButton"
+        android:layout_alignEnd="@+id/searchButton" />
+
     <Button
         android:text="Open Map"
         android:layout_width="wrap_content"
@@ -17,23 +46,17 @@
         android:id="@+id/button2"
         android:clickable="true"
         android:onClick="mapStartButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:contentDescription="Open Map" />
+        android:contentDescription="Open Map"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="60dp"
-        android:id="@+id/textView"
-        android:onClick="checkNet"
-        android:clickable="true"/>
+        android:layout_below="@+id/searchButton" />
 
 </RelativeLayout>

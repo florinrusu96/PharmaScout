@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,5 +119,13 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = new Intent(SearchActivity.this, MapsActivity.class );
         intent.putExtras(coords);
         startActivity(intent);
+    }
+
+    public void searchButton(View view) {
+        EditText searchText = (EditText) findViewById(R.id.searchText);
+
+        String text = searchText.getText().toString();
+        Toast msg = Toast.makeText(getBaseContext(),text,Toast.LENGTH_LONG);
+        msg.show();
     }
 }
