@@ -26,7 +26,11 @@
        android:id="@+id/goToSearch"
        android:layout_width="match_parent"
        android:layout_height="50dp"
-       android:background="#006cff" >
+       android:background="#006cff"
+       android:clipChildren="false"
+       android:clickable="true"
+       android:onClick="searchAction"
+       >
        <TextView
            android:id="@+id/goToSearchText"
            android:layout_width="match_parent"
@@ -35,6 +39,42 @@
            android:textColor="#FFFFFF"
            />
    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/goToOptions"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp"
+        android:background="#ff6600"
+        android:clipChildren="false"
+        android:clickable="true"
+        android:onClick="optionsAction">
+        <TextView
+            android:id="@+id/goToOptionText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center"
+            android:textColor="#ffffff"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp"
+        android:background="#00ff06"
+        android:clipChildren="false"
+        android:clickable="true"
+        android:onClick="exitAction">
+        <TextView
+            android:id="@+id/exitText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center"
+            android:textColor="#ffffff"
+            />
+    </LinearLayout>
 
 
 </LinearLayout>
