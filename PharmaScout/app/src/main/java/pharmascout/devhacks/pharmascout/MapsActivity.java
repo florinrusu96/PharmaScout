@@ -18,6 +18,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public double latitude;
     public double longitude;
 
+    // https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992?&destination=44.419144, 26.081745&key=AIzaSyCslSXOhc3emxLr_vfM0pRAAvBHye76Mto
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

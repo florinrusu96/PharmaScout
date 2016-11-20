@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".OptionsScreen">
+        <activity android:name=".OptionsScreen" android:label="Options">
         </activity>
 
         <activity android:name=".SearchActivity">
@@ -33,7 +33,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCslSXOhc3emxLr_vfM0pRAAvBHye76Mto" />
+            android:value="AIzaSyB1Cu6CfZFz1NgyhgaKFshpfApvrWSA3M4" />
 
     </application>
 

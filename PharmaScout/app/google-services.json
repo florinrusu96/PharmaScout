@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "312249004085",
+    "firebase_url": "https://pharmascout-10629.firebaseio.com",
+    "project_id": "pharmascout-10629",
+    "storage_bucket": "pharmascout-10629.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312249004085:android:33bde7cf383d10a1",
+        "android_client_info": {
+          "package_name": "pharmascout.devhacks.pharmascout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312249004085-t7bg93nsr7h91ddfbner7bmgn15smq7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKzGQ0mpuFat446YcgJZ6x4pWTAhimFUs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

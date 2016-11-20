@@ -67,7 +67,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void exitAction(View view) {
-
+        finish();
     }
 }
 
