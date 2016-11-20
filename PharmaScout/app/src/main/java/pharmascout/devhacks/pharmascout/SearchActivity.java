@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -45,6 +49,36 @@ public class SearchActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         //comment pus de Nelu
+
+        ListView listView = (ListView) findViewById(R.id.listView );
+
+        ArrayList<String> listItems=new ArrayList<String>();
+
+        listItems.add("Clicked : "+ 1);
+        listItems.add("Clicked : "+ 12);
+        listItems.add("Clicked : "+ 3);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                                    android.R.layout.simple_list_item_1,
+                                    listItems);
+
+        listView.setAdapter(adapter);
+
+        adapter.add("New Item");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle coords = new Bundle();
+                Random rand = new Random();
+                coords.putDouble("latitude", 90 * rand.nextDouble());
+                coords.putDouble("longitude", 90 * rand.nextDouble());
+
+                Intent intent = new Intent(SearchActivity.this, MapsActivity.class );
+                intent.putExtras(coords);
+                startActivity(intent);
+            }
+        });
     }
 
     public String convertInputStreamToString(InputStream stream, int length) throws IOException, UnsupportedEncodingException {
@@ -118,17 +152,6 @@ public class SearchActivity extends AppCompatActivity {
         catch (ExecutionException ee){
 
         }
-    }
-
-    public void mapStartButton(View obj){
-        Bundle coords = new Bundle();
-        Random rand = new Random();
-        coords.putDouble("latitude", 90 * rand.nextDouble());
-        coords.putDouble("longitude", 90 * rand.nextDouble());
-
-        Intent intent = new Intent(SearchActivity.this, MapsActivity.class );
-        intent.putExtras(coords);
-        startActivity(intent);
     }
 
     public void searchButton(View view) {
