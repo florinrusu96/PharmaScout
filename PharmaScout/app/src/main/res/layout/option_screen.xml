@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     android:weightSum="1"
+
+    android:background="@drawable/back3"
+
     >
     <TextView
         android:id="@+id/rangeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         />
 
-    <SeekBar
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <SeekBar
+        android:layout_width="325dp"
+        android:layout_height="55dp"
         android:id="@+id/seekBar"
-        android:layout_weight="0.08" />
+        android:background="#FFFFFF"
+        android:max="10"
+        android:clickable="true"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/sliderText"
+        android:background="#FFFFFF"
+        />
+
+    </LinearLayout>
 </LinearLayout>

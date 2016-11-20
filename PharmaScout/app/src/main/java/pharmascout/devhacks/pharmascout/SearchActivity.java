@@ -3,14 +3,19 @@ package pharmascout.devhacks.pharmascout;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -45,6 +51,53 @@ public class SearchActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         //comment pus de Nelu
+
+        ListView listView = (ListView) findViewById(R.id.listView );
+
+        ArrayList<String> listItems=new ArrayList<String>();
+
+        listItems.add("Clicked : "+ 1);
+        listItems.add("Clicked : "+ 12);
+        listItems.add("Clicked : "+ 3);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                                    android.R.layout.simple_list_item_1,
+                                    listItems){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the Item from ListView
+                View view = super.getView(position, convertView, parent);
+
+                // Initialize a TextView for ListView each Item
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                // Set the text color of TextView (ListView Item)
+                tv.setTextColor(Color.WHITE);
+                tv.setTextSize(22);
+
+                // Generate ListView Item using TextView
+                return view;
+            }
+        };
+
+
+        listView.setAdapter(adapter);
+
+        adapter.add("New Item");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle coords = new Bundle();
+                Random rand = new Random();
+                coords.putDouble("latitude", 90 * rand.nextDouble());
+                coords.putDouble("longitude", 90 * rand.nextDouble());
+
+                Intent intent = new Intent(SearchActivity.this, MapsActivity.class );
+                intent.putExtras(coords);
+                startActivity(intent);
+            }
+        });
     }
 
     public String convertInputStreamToString(InputStream stream, int length) throws IOException, UnsupportedEncodingException {
@@ -118,17 +171,6 @@ public class SearchActivity extends AppCompatActivity {
         catch (ExecutionException ee){
 
         }
-    }
-
-    public void mapStartButton(View obj){
-        Bundle coords = new Bundle();
-        Random rand = new Random();
-        coords.putDouble("latitude", 90 * rand.nextDouble());
-        coords.putDouble("longitude", 90 * rand.nextDouble());
-
-        Intent intent = new Intent(SearchActivity.this, MapsActivity.class );
-        intent.putExtras(coords);
-        startActivity(intent);
     }
 
     public void searchButton(View view) {

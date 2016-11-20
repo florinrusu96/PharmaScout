@@ -19,7 +19,6 @@
             android:background="#d0d0d0"
             android:id="@+id/searchText"
             android:hint="Search ..."
-
             android:layout_width="match_parent"
             android:layout_height="50dp"
 
@@ -29,31 +28,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchButton"
-        android:text="Search"
         android:clickable="true"
+        android:text="Search"
         android:background="#48afcd"
         android:onClick="searchButton"
-        android:layout_below="@+id/searchText"
         android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:onClick="checkNet"
-        android:clickable="true"
-        android:layout_alignTop="@+id/button2"
-        android:layout_alignRight="@+id/searchButton"
-        android:layout_alignEnd="@+id/searchButton" />
 
 
     <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/searchButton" />
+        android:scrollbarFadeDuration="2"
+        android:nestedScrollingEnabled="true"
+        android:textColor="#FFFFFF"
+
+        />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:onClick="checkNet"
+            android:clickable="true"
+             />
     </LinearLayout>
 </RelativeLayout>
