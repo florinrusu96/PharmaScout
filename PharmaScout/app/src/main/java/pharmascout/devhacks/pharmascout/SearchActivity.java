@@ -54,13 +54,15 @@ import pharmascout.devhacks.pharmascout.API.RestDBApi;
 import pharmascout.devhacks.pharmascout.model.FarmacieModel;
 import pharmascout.devhacks.pharmascout.singletons.DataHandler;
 
+
+
 public class SearchActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     public static final int MAX_DISPLAY_NUMBER = 5;
 
-    double myLatitude;
-    double myLongitude;
+    static double myLatitude;
+    static double myLongitude;
 
     boolean gpsFound = false;
 
@@ -76,7 +78,9 @@ public class SearchActivity extends AppCompatActivity {
             TextView searchButtonTextView = (TextView) findViewById(R.id.searchButton);
 
 //            searchButtonTextView.setClickable(true);
-            searchButtonTextView.setText("Search");
+            if( gpsFound != true )
+                searchButtonTextView.setText("Search");
+
             gpsFound = true;
         }
 
@@ -104,6 +108,13 @@ public class SearchActivity extends AppCompatActivity {
 
             TextView test = (TextView) findViewById(R.id.textView);
             test.setText(" " + myLongitude + " " + myLatitude );
+
+            TextView searchButtonTextView = (TextView) findViewById(R.id.searchButton);
+
+            if( gpsFound != true )
+                searchButtonTextView.setText("Search2");
+
+            gpsFound = true;
         }
 
         @Override
@@ -135,11 +146,12 @@ public class SearchActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
+
             LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
 
-//            LocationManager mmLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mmLocationListener);
+            LocationManager mmLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            mmLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mmLocationListener);
 
             TextView test = (TextView) findViewById(R.id.textView);
             test.setText(" " + myLongitude + " " + myLatitude);
