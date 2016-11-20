@@ -26,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -41,6 +42,7 @@ import pharmascout.devhacks.pharmascout.singletons.DataHandler;
 public class SearchActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
+    public static final int MAX_DISPLAY_NUMBER = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,78 +83,22 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public String convertInputStreamToString(InputStream stream, int length) throws IOException, UnsupportedEncodingException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[length];
-        reader.read(buffer);
-        return new String(buffer);
-    }
-    //https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992?&destination=44.419144, 26.081745&key=AIzaSyAA4P_7CK7s_bk0U-MsvjrYiPuJDjoLhHg
-    public String getDistanceFromAsString() throws InterruptedException, ExecutionException
-    {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Callable<String> callable = new Callable<String>() {
-            @Override
-            public String call(){
-                String stringUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+
-                        "44.468447"+","+"26.14348300000006"+
-                        "&destinations="+
-                        "44.419144"+","+"26.081745"+
-                        "&mode=driving&key=AIzaSyAzceIDmZrbXpfbctDo_ZSuwV47f4B-gCY";
 
-                InputStream is = null;
-                int length = 500;
-                try {
-                    try {
-                        URL url = new URL(stringUrl);
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        conn.setReadTimeout(10000 /* milliseconds */);
-                        conn.setConnectTimeout(15000 /* milliseconds */);
-                        conn.setDoInput(true);
-                        conn.connect();
-                        int response = conn.getResponseCode();
-
-                        is = conn.getInputStream();
-                        String contentAsString = convertInputStreamToString(is, length);
-                        return contentAsString;
-                    } catch (MalformedURLException MEx) {
-                        return MEx.toString() + " EX 1";
-                    } catch (IOException IOEx) {
-                        return IOEx.toString() + "EX 2";
-                    } finally {
-                        if (is != null) {
-                            is.close();
-                        }
-                    }
-                }
-                catch (IOException IOEx) {
-                    return IOEx.toString() + "EX 3";
-                }
-            }
-        };
-        Future<String> future = executor.submit(callable);
-        // future.get() returns 2 or raises an exception if the thread dies, so safer
-        executor.shutdown();
-
-        return future.get();
-    }
-
-    int number = 0;
-    public void checkNet(View obj){
-        TextView test = (TextView) findViewById(R.id.textView);
-        test.setText("as expected " + number++ );
-
-        try {
-            test.setText(getDistanceFromAsString());
-        }
-        catch (InterruptedException ie){
-
-        }
-        catch (ExecutionException ee){
-
-        }
-    }
+//    int number = 0;
+//    public void checkNet(View obj){
+//        TextView test = (TextView) findViewById(R.id.textView);
+//        test.setText("as expected " + number++ );
+//
+//        try {
+//            test.setText(getDistanceFromAsString());
+//        }
+//        catch (InterruptedException ie){
+//
+//        }
+//        catch (ExecutionException ee){
+//
+//        }
+//    }
 
     public void searchButton(View view) {
         EditText searchText = (EditText) findViewById(R.id.searchText);
@@ -196,9 +142,16 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<FarmacieModel> listaFarmacii) {
                 setLoading(false);
+                FarmacieModel primaFarmacie;
                 Toast.makeText(SearchActivity.this, "Boss! Chiar am luat ceva", Toast.LENGTH_SHORT).show();
                 listaFarmacii = DataHandler.getInstance().filterOutFarmaciiInchise(listaFarmacii);
-                Log.i(SearchActivity.class.getName(), String.valueOf(listaFarmacii.size()));
+                if (listaFarmacii != null && !listaFarmacii.isEmpty()) {
+
+                    if (listaFarmacii.size() > MAX_DISPLAY_NUMBER) {
+                        handleTooManyResults(listaFarmacii);
+                    }
+
+                }
             }
 
             @Override
@@ -208,6 +161,15 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e(SearchActivity.class.getName(), message);
             }
         });
+    }
+
+    private void handleTooManyResults(List<FarmacieModel> listaFarmacii) {
+        HashMap<FarmacieModel, Integer> farmacieToDistanceMap = new HashMap<>();
+
+        for (FarmacieModel farmacie : listaFarmacii) {
+            farmacieToDistanceMap.put(farmacie, DataHandler.getInstance().getDistanceTo(farmacie.getLongitudine(),
+                    farmacie.getLatitudine()));
+        }
     }
 }
 

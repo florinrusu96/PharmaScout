@@ -38,7 +38,10 @@ public class RestDBApi {
     public void getFarmacii(String query, final CallBack callBack) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("apikey", "583096995472037d54148828");
-        queryMap.put("filter", query);
+
+        if (query != null && !query.isEmpty()) {
+            queryMap.put("filter", query);
+        }
 
         farmaciiService.getFarmacii(queryMap).enqueue(new Callback<List<FarmacieModel>>() {
             @Override
