@@ -8,25 +8,33 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/back2"
     tools:context="pharmascout.devhacks.pharmascout.SearchActivity">
-
-    <EditText
-        android:id="@+id/searchText"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:background="#d0d0d0"
+            android:id="@+id/searchText"
+            android:hint="Search ..."
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            />
 
     <Button
-        android:layout_width="103dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchButton"
         android:text="Search"
         android:clickable="true"
-        android:layout_weight="0.42"
+        android:background="#48afcd"
         android:onClick="searchButton"
         android:layout_below="@+id/searchText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:text="TextView"
@@ -39,17 +47,6 @@
         android:layout_alignRight="@+id/searchButton"
         android:layout_alignEnd="@+id/searchButton" />
 
-    <Button
-        android:text="Open Map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:clickable="true"
-        android:onClick="mapStartButton"
-        android:contentDescription="Open Map"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <ListView
         android:layout_width="match_parent"
@@ -58,5 +55,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/searchButton" />
-
+    </LinearLayout>
 </RelativeLayout>
