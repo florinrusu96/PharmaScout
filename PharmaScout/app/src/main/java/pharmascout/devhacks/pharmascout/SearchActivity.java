@@ -128,11 +128,11 @@ public class SearchActivity extends AppCompatActivity {
             LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
 
-            LocationManager mmLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mmLocationListener);
+//            LocationManager mmLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mmLocationListener);
 
             TextView test = (TextView) findViewById(R.id.textView);
-            test.setText(" " + myLongitude + " " + mLocationManager.toString());
+            test.setText(" " + myLongitude + " " + myLatitude);
         } else {
             // Show rationale and request permission. Joking, sudden nothing here
         }
@@ -269,11 +269,11 @@ public class SearchActivity extends AppCompatActivity {
         for (int i = 0; i < MAX_DISPLAY_NUMBER; i++) {
             int min = 0;
             for (Integer currentDistance : farmacieToDistanceMap.values()) {
-                if (min == 0) {
+                if (min == 0 && !smallestDistances.contains(currentDistance)) {
                     min = currentDistance;
                 }
 
-                if (min < currentDistance && !smallestDistances.contains(currentDistance)) {
+                if (currentDistance < min && !smallestDistances.contains(currentDistance)) {
                     min = currentDistance;
                 }
             }
@@ -281,15 +281,20 @@ public class SearchActivity extends AppCompatActivity {
             smallestDistances.add(min);
         }
 
+        Log.e("Distante", smallestDistances.toString());
+        Log.e("Distante2", farmacieToDistanceMap.values().toString());
+
         List<FarmacieModel> farmaciiApropiate = new ArrayList<>();
 
-        for (Map.Entry<FarmacieModel, Integer> mapEntry : farmacieToDistanceMap.entrySet()) {
-            if (smallestDistances.contains(mapEntry.getValue())) {
-                farmaciiApropiate.add(mapEntry.getKey());
+        for(Integer smallDistance : smallestDistances) {
+            if (farmaciiApropiate.size() >= MAX_DISPLAY_NUMBER) {
+                break;
             }
 
-            if (farmaciiApropiate.size() == MAX_DISPLAY_NUMBER) {
-                break;
+            for (FarmacieModel farmacieApropiata : farmacieToDistanceMap.keySet()) {
+                if (farmacieToDistanceMap.get(farmacieApropiata).equals(smallDistance)) {
+                    farmaciiApropiate.add(farmacieApropiata);
+                }
             }
         }
 
