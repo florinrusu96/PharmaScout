@@ -101,14 +101,15 @@ public class DataHandler {
 
 
     //https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992?&destination=44.419144, 26.081745&key=AIzaSyAA4P_7CK7s_bk0U-MsvjrYiPuJDjoLhHg
-    public String getDistanceFromAsString(final float longitudine, final float latitudine)
-            throws InterruptedException, ExecutionException {
+    public String getDistanceFromAsString(final double longitudine, final double latitudine,
+                                          final double myLongitudine, final double myLatitudine) throws InterruptedException,
+                            ExecutionException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Callable<String> callable = new Callable<String>() {
             @Override
             public String call(){
                 String stringUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+
-                        "44.468447"+","+"26.14348300000006"+
+                        myLatitudine+","+myLongitudine+
                         "&destinations="+
                         latitudine+","+longitudine+
                         "&mode=driving&key=AIzaSyAzceIDmZrbXpfbctDo_ZSuwV47f4B-gCY";
@@ -161,10 +162,10 @@ public class DataHandler {
         return new String(buffer);
     }
 
-    public int getDistanceTo ( float longitudine, float latitudine) {
+    public int getDistanceTo ( double longitudine, double latitudine, double myLongitudine, double myLatitudine) {
         JsonElement jsonElement = null;
         try {
-            String jsonAsString = getDistanceFromAsString(longitudine, latitudine);
+            String jsonAsString = getDistanceFromAsString(longitudine, latitudine, myLongitudine, myLatitudine);
             JSONObject jsonObject = new JSONObject(jsonAsString);
 
             return getDistanceFromObject(jsonObject);
