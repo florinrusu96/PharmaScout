@@ -65,5 +65,9 @@ public class HomeScreen extends AppCompatActivity {
         Intent i=new Intent(HomeScreen.this, OptionsScreen.class);
         startActivity(i);
     }
+
+    public void exitAction(View view) {
+        finish();
+    }
 }
 
