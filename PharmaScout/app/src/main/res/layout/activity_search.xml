@@ -35,23 +35,10 @@
         android:id="@+id/textView"
         android:onClick="checkNet"
         android:clickable="true"
-        android:layout_alignTop="@+id/button2"
-        android:layout_alignRight="@+id/searchButton"
-        android:layout_alignEnd="@+id/searchButton" />
-
-    <Button
-        android:text="Open Map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:clickable="true"
-        android:onClick="mapStartButton"
-        android:contentDescription="Open Map"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/button2" />
 
     <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/button2"

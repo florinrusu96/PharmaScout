@@ -26,7 +26,7 @@
        android:id="@+id/goToSearch"
        android:layout_width="match_parent"
        android:layout_height="50dp"
-       android:background="#006cff"
+       android:background="#54b0cb"
        android:clipChildren="false"
        android:clickable="true"
        android:onClick="searchAction"
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:layout_height="50dp"
-        android:background="#ff6600"
+        android:background="#e3733d"
         android:clipChildren="false"
         android:clickable="true"
         android:onClick="optionsAction">
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:layout_height="50dp"
-        android:background="#00ff06"
+        android:background="#5fe07a"
         android:clipChildren="false"
         android:clickable="true"
         android:onClick="exitAction">
