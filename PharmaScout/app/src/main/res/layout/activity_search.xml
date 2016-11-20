@@ -24,13 +24,17 @@
 
             />
 
-    <Button
+    <TextView
+        android:src="@drawable/boton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:id="@+id/searchButton"
-        android:clickable="true"
-        android:text="Search"
-        android:background="#48afcd"
+        android:background="@drawable/boton"
+        android:clickable="false"
+        android:text="Waiting GPS ..."
+        android:fontFamily="monospace"
+        android:textSize="25dp"
+        android:gravity="center"
         android:onClick="searchButton"
         android:layout_marginTop="10dp"/>
 
@@ -43,6 +47,8 @@
         android:scrollbarFadeDuration="2"
         android:nestedScrollingEnabled="true"
         android:textColor="#FFFFFF"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="15dp"
 
         />
 

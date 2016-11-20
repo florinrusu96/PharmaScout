@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -60,6 +62,8 @@ public class SearchActivity extends AppCompatActivity {
     double myLatitude;
     double myLongitude;
 
+    boolean gpsFound = false;
+
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
@@ -68,6 +72,12 @@ public class SearchActivity extends AppCompatActivity {
 
             TextView test = (TextView) findViewById(R.id.textView);
             test.setText(" " + myLongitude + " " + myLatitude );
+
+            TextView searchButtonTextView = (TextView) findViewById(R.id.searchButton);
+
+//            searchButtonTextView.setClickable(true);
+            searchButtonTextView.setText("Search");
+            gpsFound = true;
         }
 
         @Override
@@ -146,7 +156,23 @@ public class SearchActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<String>(this,
                                     android.R.layout.simple_list_item_1,
-                                    farmaciiArray);
+                                    farmaciiArray){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the Item from ListView
+                View view = super.getView(position, convertView, parent);
+
+                // Initialize a TextView for ListView each Item
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                // Set the text color of TextView (ListView Item)
+                tv.setTextColor(Color.WHITE);
+                tv.setTextSize(18);
+
+                // Generate ListView Item using TextView
+                return view;
+            }
+        };
 
         listView.setAdapter(adapter);
 
@@ -183,6 +209,9 @@ public class SearchActivity extends AppCompatActivity {
 //    }
 
     public void searchButton(View view) {
+        if(!gpsFound)
+            return;
+
         EditText searchText = (EditText) findViewById(R.id.searchText);
 
         String text = searchText.getText().toString();
@@ -241,8 +270,8 @@ public class SearchActivity extends AppCompatActivity {
                         LatLng coord = new LatLng(farmacie.getLatitudine(), farmacie.getLongitudine());
 
                         coordsArray.add(index++, coord);
-                        adapter.add(index + " " + farmacie.getNume() + ", " + farmacie.getAdresaFarmacie() + " "
-                                                + farmacie.getProgram() );
+                        adapter.add("           \u2022" + farmacie.getNume() + "\nAdresa: " + farmacie.getAdresaFarmacie() + "\n "
+                                                + "Orar: " + farmacie.getProgram() );
                     }
 
                 }
