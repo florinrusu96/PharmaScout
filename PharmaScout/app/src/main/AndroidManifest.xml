@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".OptionsScreen">
+        <activity android:name=".OptionsScreen" android:label="Options">
         </activity>
 
         <activity android:name=".SearchActivity">
