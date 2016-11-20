@@ -40,6 +40,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -231,18 +232,17 @@ public class SearchActivity extends AppCompatActivity {
                 if (listaFarmacii != null && !listaFarmacii.isEmpty()) {
 
                     if (listaFarmacii.size() > MAX_DISPLAY_NUMBER) {
-                        handleTooManyResults(listaFarmacii);
+                        listaFarmacii = handleTooManyResults(listaFarmacii);
+
                     }
-                    else{
-                        int index = 0;
+                    int index = 0;
 
-                        for( FarmacieModel farmacie : listaFarmacii ){
-                            LatLng coord = new LatLng(farmacie.getLatitudine(), farmacie.getLongitudine());
+                    for( FarmacieModel farmacie : listaFarmacii ){
+                        LatLng coord = new LatLng(farmacie.getLatitudine(), farmacie.getLongitudine());
 
-                            coordsArray.add(index++, coord);
-                            adapter.add(index + " " + farmacie.getNume() + ", " + farmacie.getAdresaFarmacie() + " "
-                                                    + farmacie.getProgram() );
-                        }
+                        coordsArray.add(index++, coord);
+                        adapter.add(index + " " + farmacie.getNume() + ", " + farmacie.getAdresaFarmacie() + " "
+                                                + farmacie.getProgram() );
                     }
 
                 }
@@ -257,13 +257,43 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void handleTooManyResults(List<FarmacieModel> listaFarmacii) {
+    private List<FarmacieModel> handleTooManyResults(List<FarmacieModel> listaFarmacii) {
         HashMap<FarmacieModel, Integer> farmacieToDistanceMap = new HashMap<>();
 
         for (FarmacieModel farmacie : listaFarmacii) {
             farmacieToDistanceMap.put(farmacie, DataHandler.getInstance().getDistanceTo(farmacie.getLongitudine(),
-                    farmacie.getLatitudine()));
+                    farmacie.getLatitudine(), myLongitude, myLatitude));
         }
+
+        List<Integer> smallestDistances = new ArrayList<>();
+        for (int i = 0; i < MAX_DISPLAY_NUMBER; i++) {
+            int min = 0;
+            for (Integer currentDistance : farmacieToDistanceMap.values()) {
+                if (min == 0) {
+                    min = currentDistance;
+                }
+
+                if (min < currentDistance && !smallestDistances.contains(currentDistance)) {
+                    min = currentDistance;
+                }
+            }
+
+            smallestDistances.add(min);
+        }
+
+        List<FarmacieModel> farmaciiApropiate = new ArrayList<>();
+
+        for (Map.Entry<FarmacieModel, Integer> mapEntry : farmacieToDistanceMap.entrySet()) {
+            if (smallestDistances.contains(mapEntry.getValue())) {
+                farmaciiApropiate.add(mapEntry.getKey());
+            }
+
+            if (farmaciiApropiate.size() == MAX_DISPLAY_NUMBER) {
+                break;
+            }
+        }
+
+        return farmaciiApropiate;
     }
 }
 
